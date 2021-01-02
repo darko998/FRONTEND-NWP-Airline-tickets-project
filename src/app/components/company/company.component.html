@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <br><br><br><br><br>
+
+    <div class="row text-center">
+        <div class="text-center mx-auto">
+            <h3 class="text-uppercase text-muted">{{ company.name }}</h3>
+        </div>
+    </div>
+
+    <div class="row text-center mt-4">
+        <div class="text-center mx-auto">
+            <a class="btn btn-primary mr-3" (click)="openEditForm()">Edit company</a>
+            <a class="btn btn-primary" (click)="delete()">Delete company</a>
+        </div>
+    </div>
+
+    <!--  EDIT COMPANY FORM  -->
+    <div class="row create-user-div text-center mx-auto mt-5" *ngIf="showEditForm">
+        <div class="col mx-auto">
+            <form [formGroup]="editForm" (ngSubmit)="submitEditForm(editForm.value)">
+                <!-- Name -->
+                <div class="form-group mb-3">
+                    <input id="inputUsername" formControlName="name" placeholder="Enter company name" autofocus=""
+                        class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                    <div class="error-message mt-2  text-danger" *ngIf="name.errors?.required">
+                        Name is
+                        required!
+                    </div>
+                </div>
+
+                <!-- Sign in button -->
+                <button type="submit" [disabled]="!editForm.valid"
+                    class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Save
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="row text-center mt-4">
+        <div class="text-center mx-auto">
+            <app-ticket-list [tickets]="tickets"></app-ticket-list>
+        </div>
+    </div>
+</div>

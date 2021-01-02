@@ -1,0 +1,338 @@
+<div class="container-fluid">
+    <br><br><br><br><br>
+    <div *ngIf="isAdmin">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-center">
+                <button class="btn btn-info mr-3 btn-lg" (click)="openCreateUserForm()">Create user</button>
+                <button class="btn btn-info mr-3 btn-lg" (click)="openCreateTicketForm()">Create ticket</button>
+                <button class="btn btn-info mr-3 btn-lg" (click)="openCreateCompanyForm()">Create company</button>
+                <button class="btn btn-info btn-lg" (click)="openCreateFlightForm()">Create flight</button>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <!--  CREATE FLIGHT FORM  -->
+        <div class="row create-user-div text-center mx-auto mt-5" *ngIf="showCreateFlightForm">
+            <div class="col mx-auto">
+                <form [formGroup]="createFlightForm" (ngSubmit)="submitCreateFlightForm(createFlightForm.value)">
+                    <!-- Origin city -->
+                    <div class="form-group mb-3">
+                        <input id="inputUsername" formControlName="originCity" placeholder="Enter origin city"
+                            autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                        <div class="error-message mt-2  text-danger" *ngIf="originCity.errors?.required">
+                            Origin city is
+                            required!
+                        </div>
+                    </div>
+
+                    <!-- Destination city -->
+                    <div class="form-group mb-3">
+                        <input id="inputUsername" formControlName="destinationCity" placeholder="Enter destination city"
+                            autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                        <div class="error-message mt-2  text-danger" *ngIf="destinationCity.errors?.required">
+                            Origin city is
+                            required!
+                        </div>
+                    </div>
+
+                    <!-- Sign in button -->
+                    <button type="submit" [disabled]="!createFlightForm.valid"
+                        class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Save
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+        <!--  CREATE COMPANY FORM  -->
+        <div class="row create-user-div text-center mx-auto mt-5" *ngIf="showCreateCompanyForm">
+            <div class="col mx-auto">
+                <form [formGroup]="createCompanyForm" (ngSubmit)="submitCreateCompanyForm(createCompanyForm.value)">
+                    <!-- Name -->
+                    <div class="form-group mb-3">
+                        <input id="inputUsername" formControlName="companyName" placeholder="Enter company name"
+                            autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                        <div class="error-message mt-2  text-danger" *ngIf="companyName.errors?.required">
+                            Name is
+                            required!
+                        </div>
+                    </div>
+
+                    <!-- Sign in button -->
+                    <button type="submit" [disabled]="!createCompanyForm.valid"
+                        class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Save
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+        <!--  CREATE USER FORM  -->
+        <div class="row create-user-div text-center mx-auto mt-5" *ngIf="showCreateUserForm">
+            <div class="col mx-auto">
+                <form [formGroup]="createUserForm" (ngSubmit)="submitCreateUserForm(createUserForm.value)">
+                    <!-- Username -->
+                    <div class="form-group mb-3">
+                        <input id="inputUsername" formControlName="username" type="email" placeholder="Enter username"
+                            autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                        <div class="error-message mt-2  text-danger" *ngIf="username.errors?.required">
+                            Username is
+                            required!
+                        </div>
+
+                        <div class="error-message mt-2  text-danger" *ngIf="username.errors?.minlength">
+                            Username has to
+                            be at
+                            least 4 characters long!
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <!-- Password -->
+                    <div class="form-group mb-3">
+                        <input id="inputPassword" formControlName="password" type="password"
+                            placeholder="Enter password"
+                            class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+
+                        <div class="error-message mt-2 text-danger" *ngIf="password.errors?.required">
+                            Password is
+                            required!
+                        </div>
+                        <div class="error-message mt-2  text-danger" *ngIf="password.errors?.minlength">
+                            Password has to
+                            be at
+                            least 4 characters long! </div>
+                    </div>
+
+                    <br>
+
+                    <!-- UserType -->
+                    <div class="form-group mb-3">
+
+                        <div class="row">
+                            <div class="col-md-2 mt-1">
+                                <p class="text-muted">User type</p>
+                            </div>
+
+                            <div class="col">
+                                <select class="form-control" formControlName="userType">
+                                    <option *ngFor="let userType of userTypes" [value]="userType.id">
+                                        {{ userType.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sign in button -->
+                    <button type="submit" [disabled]="!createUserForm.valid"
+                        class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Save
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+
+        <!--  CREATE TICKET FORM  -->
+        <div class="row create-user-div text-center mx-auto mt-5" *ngIf="showCreateTicketForm">
+            <div class="col mx-auto">
+                <form [formGroup]="createTicketForm" (ngSubmit)="submitCreateTicketForm(createTicketForm.value)">
+
+                    <!-- Flights -->
+                    <div class="form-group mb-3">
+
+                        <div class="row">
+                            <div class="col-md-2 mt-1">
+                                <p class="text-muted">Choose flight</p>
+                            </div>
+
+                            <div class="col">
+                                <select class="form-control" formControlName="flightId">
+                                    <option *ngFor="let flight of flights" [value]="flight.id">
+                                        {{ flight.originCityName + " - " + flight.destinationCityName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <!-- Companies -->
+                    <div class="form-group mb-3">
+
+                        <div class="row">
+                            <div class="col-md-2 mt-1">
+                                <p class="text-muted">Choose company</p>
+                            </div>
+
+                            <div class="col">
+                                <select class="form-control" formControlName="companyId">
+                                    <option *ngFor="let company of companies" [value]="company.id">
+                                        {{ company.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ticket type -->
+                    <div class="form-group mb-3">
+
+                        <div class="row">
+                            <div class="col-md-2 mt-1">
+                                <p class="text-muted">Choose ticket type</p>
+                            </div>
+
+                            <div class="col">
+                                <select class="form-control" formControlName="oneWay" (change)="hideOrShowReturnDate()">
+                                    <option value="1">
+                                        One way
+                                    </option>
+
+                                    <option value="0">
+                                        Return
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Depart date -->
+                    <div class="form-group mb-3">
+
+                        <div class="row">
+                            <div class="col-md-2 mt-1">
+                                <p class="text-muted">Depart date</p>
+                            </div>
+
+                            <div class="col">
+                                <input type="datetime-local" formControlName="departDate" autofocus=""
+                                    class="form-control border-1 shadow-sm px-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Return date -->
+                    <div class="form-group mb-3" *ngIf="isNewTicketOfReturnType">
+
+                        <div class="row">
+                            <div class="col-md-2 mt-1">
+                                <p class="text-muted">Return date</p>
+                            </div>
+
+                            <div class="col">
+                                <input type="datetime-local" formControlName="returnDate" autofocus=""
+                                    class="form-control border-1 shadow-sm px-4">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Count -->
+                    <div class="form-group mb-3">
+                        <input id="inputPassword" formControlName="count"
+                            placeholder="Enter number of available tickets"
+                            class="form-control border-1 shadow-sm px-4 text-primary">
+                        <div class="error-message mt-2  text-danger" *ngIf="count.errors?.pattern">
+                            In this field only digits are acceptable. </div>
+
+                    </div>
+
+
+                    <!-- Sign in button -->
+                    <button type="submit" [disabled]="!createTicketForm.valid"
+                        class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Save
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIST OF TICKETS -->
+    <div class="row mt-5 justify-content-center user-list mx-5">
+        <div class="col user-list">
+            <div class="row">
+                <div class="col-md-2">
+                    <!-- DIV FOR FILTERING TICKETS-->
+                    <div class="container-filter">
+                        <h4>Filter tickets</h4>
+                        <br />
+                        <br />
+                        <form [formGroup]="searchForm" (ngSubmit)="submitForm(searchForm.value)">
+
+                            <label for="from">
+                                <strong>Ticket type</strong>
+                            </label>
+                            <select class="form-control  border-1 shadow-sm px-4 mb-5" id="ticket-type"
+                                formControlName="chosenTicketType">
+                                <option value="all">All</option>
+                                <option value="oneWay">One way</option>
+                                <option value="returnTicket">Return</option>
+                            </select>
+
+                            <!-- FROM INPUT FIELD-->
+                            <div class=" form-group">
+                                <label for="from">
+                                    <strong>From</strong>
+                                </label>
+                                <input id="inputFrom" formControlName="from" placeholder="Enter origin city"
+                                    autofocus="" class="form-control  border-1 shadow-sm px-4">
+                            </div>
+
+                            <!-- DESTINATION INPUT FIELD-->
+                            <div class="form-group">
+                                <label for="to">
+                                    <strong>To</strong>
+                                </label>
+                                <input id="inputTo" formControlName="to" placeholder="Enter destination city"
+                                    autofocus="" class="form-control border-1 shadow-sm px-4">
+                            </div>
+
+                            <br />
+                            <hr class="my-4" />
+                            <br />
+                            <!-- DEPART DATE FIELD-->
+                            <div class="form-group">
+                                <label for="depart-date">
+                                    <strong>Depart date</strong>
+                                </label>
+                                <input type="datetime-local" class="form-control border-1 shadow-sm px-4"
+                                    id="depart-date" placeholder="Return date" formControlName="departDate" />
+                            </div>
+
+                            <!-- RETURN DATE FIELD-->
+                            <div class="form-group">
+                                <label for="return-date">
+                                    <strong>Return date</strong>
+                                </label>
+                                <input type="datetime-local" class="form-control border-1 shadow-sm px-4"
+                                    id="return-date" placeholder="Return date" formControlName="returnDate" />
+                            </div>
+
+                            <br />
+                            <br />
+                            <br />
+                            <!-- FILTER SUBMIT BUTTON-->
+                            <button type="submit" class="btn btn-primary">Apply filter</button>
+                        </form>
+                    </div>
+                    <!-- END OF DIV FOR FILTERING TICKETS-->
+                </div>
+
+                <div class="col">
+                    <app-ticket-list [tickets]="filteredTickets" [isAdmin]="isAdmin"></app-ticket-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

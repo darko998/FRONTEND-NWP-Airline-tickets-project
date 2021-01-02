@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div class="card px-4 py-2 mt-2 shaped bg-light" *ngFor="let ticket of tickets">
+        <div class="card-body">
+            <h4 class="card-title mb-4">{{ ticket.originCity + " - " + ticket.destinationCity}}</h4>
+            <div class="card-text">
+                <div class="row">
+                    <!--  Depart date  -->
+                    <div class="col">
+                        <span class="text-uppercase text-muted">Depart date</span>
+                        <p>{{ ticket.departDate | date:'dd/MM/yyyy hh:mm' }}</p>
+                    </div>
+
+                    <!--  Return date  -->
+                    <div class="col">
+                        <span class="text-uppercase text-muted">Return date</span>
+                        <p>{{ ticket.returnDate | date:'dd/MM/yyyy hh:mm' }}</p>
+                    </div>
+
+                    <!--  Ticket type  -->
+                    <div class="col">
+                        <span class="text-uppercase text-muted">Ticket type</span>
+                        <p *ngIf="ticket.oneWay">One way</p>
+                        <p *ngIf="!ticket.oneWay">Return</p>
+
+                    </div>
+
+                    <!--  Available tickets  -->
+                    <div class="col">
+                        <span class="text-uppercase text-muted">Available tickets</span>
+                        <p>{{ ticket.count }}</p>
+                    </div>
+
+                    <!--  Reservation expired  -->
+                    <div class="col">
+                        <span class="text-uppercase text-muted">Reservation expired</span>
+                        <p>{{ isReservationExpired(ticket) }}</p>
+                    </div>
+
+                    <!--  Company  -->
+                    <div class="col">
+                        <span class="text-uppercase text-muted">Company</span>
+                        <p>{{ ticket.companyName }}</p>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf=" isReservationExpired(ticket).match('Yes') ? false : true">
+                    <a class="btn btn-primary mr-3" (click)="apply(ticket)" *ngIf="!applied[ticket.id]">Reserve</a>
+                    <a class="btn btn-primary" (click)="unapply(ticket)" *ngIf="applied[ticket.id]">Cancel reserve</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

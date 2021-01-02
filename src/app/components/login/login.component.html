@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <br><br><br><br><br><br><br><br><br><br>><br><br><br><br>
+    <div class="row no-gutter">
+        <!-- The login content -->
+        <div class="col-md bg-white">
+            <div class="login d-flex align-items-center py-5">
+
+                <div class="container main-div">
+                    <div class="row">
+                        <div class="col-lg-10 col-xl-7 mx-auto">
+                            <h3 class="display-4">Login page</h3>
+                            <p class="text-muted mb-4">Enter your login credentials.</p>
+                            <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+                                <!-- Username -->
+                                <div class="form-group mb-3">
+                                    <input id="inputUsername" formControlName="username" type="email"
+                                        placeholder="Enter username" autofocus=""
+                                        class="form-control rounded-pill border-0 shadow-sm px-4">
+
+                                    <div class="error-message mt-2  text-danger" *ngIf="username.errors?.required">
+                                        Username is
+                                        required!
+                                    </div>
+
+                                    <div class="error-message mt-2  text-danger" *ngIf="username.errors?.minlength">
+                                        Username has to
+                                        be at
+                                        least 4 characters long!
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <!-- Password -->
+                                <div class="form-group mb-3">
+                                    <input id="inputPassword" formControlName="password" type="password"
+                                        placeholder="Enter password"
+                                        class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+
+                                    <div class="error-message mt-2 text-danger" *ngIf="password.errors?.required">
+                                        Password is
+                                        required!
+                                    </div>
+                                    <div class="error-message mt-2  text-danger" *ngIf="password.errors?.minlength">
+                                        Password has to
+                                        be at
+                                        least 4 characters long! </div>
+                                </div>
+
+                                <br>
+
+                                <!-- UserType -->
+                                <!-- <div class="form-group mb-3">
+
+                                    <div class="row">
+                                        <div class="col-md-2 mt-1">
+                                            <p class="text-muted">User type</p>
+                                        </div>
+
+                                        <div class="col">
+                                            <select class="form-control" formControlName="userTypeId">
+                                                <option *ngFor="let userType of userTypes" [value]="userType.id">
+                                                    {{ userType.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                -->
+
+                                <!-- Remember password-->
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input id="customCheck1" type="checkbox" checked class="custom-control-input">
+                                    <label for="customCheck1" class="custom-control-label">Remember password</label>
+                                </div>
+
+                                <!-- Sign in button -->
+                                <button type="submit" [disabled]="!loginForm.valid"
+                                    class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign
+                                    in
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

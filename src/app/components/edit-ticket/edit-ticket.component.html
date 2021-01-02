@@ -1,0 +1,130 @@
+<div class="container-fluid">
+    <br><br><br><br><br><br><br>
+
+    <div class="row text-center">
+        <div class="text-center mx-auto">
+            <h3 class="text-uppercase text-muted">Edit ticket</h3>
+        </div>
+    </div>
+    <br><br><br>
+    <!--  CREATE TICKET FORM  -->
+    <div class="row create-user-div text-center mx-auto mt-5">
+        <div class="col mx-auto">
+            <form [formGroup]="editForm" (ngSubmit)="submitForm(editForm.value)">
+
+                <!-- Flights -->
+                <div class="form-group mb-3">
+
+                    <div class="row">
+                        <div class="col-md-2 mt-1">
+                            <p class="text-muted">Choose flight</p>
+                        </div>
+
+                        <div class="col">
+                            <select class="form-control" formControlName="flightId">
+                                <option *ngFor="let flight of flights" [value]="flight.id">
+                                    {{ flight.originCityName + " - " + flight.destinationCityName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <!-- Companies -->
+                <div class="form-group mb-3">
+
+                    <div class="row">
+                        <div class="col-md-2 mt-1">
+                            <p class="text-muted">Choose company</p>
+                        </div>
+
+                        <div class="col">
+                            <select class="form-control" formControlName="companyId">
+                                <option *ngFor="let company of companies" [value]="company.id">
+                                    {{ company.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ticket type -->
+                <div class="form-group mb-3">
+
+                    <div class="row">
+                        <div class="col-md-2 mt-1">
+                            <p class="text-muted">Choose ticket type</p>
+                        </div>
+
+                        <div class="col">
+                            <select class="form-control" formControlName="oneWay" (change)="hideOrShowReturnDate()">
+                                <option value="1">
+                                    One way
+                                </option>
+
+                                <option value="0">
+                                    Return
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Depart date -->
+                <div class="form-group mb-3">
+
+                    <div class="row">
+                        <div class="col-md-2 mt-1">
+                            <p class="text-muted">Depart date</p>
+                        </div>
+
+                        <div class="col">
+                            <input type="datetime-local" formControlName="departDate" autofocus=""
+                                class="form-control border-1 shadow-sm px-4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Return date -->
+                <div class="form-group mb-3" *ngIf="isNewTicketOfReturnType">
+
+                    <div class="row">
+                        <div class="col-md-2 mt-1">
+                            <p class="text-muted">Return date</p>
+                        </div>
+
+                        <div class="col">
+                            <input type="datetime-local" formControlName="returnDate" autofocus=""
+                                class="form-control border-1 shadow-sm px-4">
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Count -->
+                <div class="form-group mb-3">
+                    <input id="inputPassword" formControlName="count" placeholder="Enter number of available tickets"
+                        class="form-control border-1 shadow-sm px-4 text-primary">
+                    <div class="error-message mt-2  text-danger" *ngIf="count.errors?.pattern">
+                        In this field only digits are acceptable. </div>
+
+                </div>
+
+
+                <!-- Sign in button -->
+                <button type="submit" [disabled]="!editForm.valid"
+                    class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Save
+                </button>
+
+                <!-- Back button -->
+                <button (click)="goBack()"
+                    class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Back
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
